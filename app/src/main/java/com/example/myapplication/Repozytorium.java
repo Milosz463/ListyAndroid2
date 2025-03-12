@@ -30,4 +30,15 @@ ArrayList<Pzepis> wybranePrzepisy=new ArrayList<>();
 return wybranePrzepisy;
 
     }
+    public static Pzepis zwrocPrzepis(String nazwa){
+        wygenerujPrzepisy();
+        for (Pzepis przepis:przepisy
+             ) {
+            if(przepis.getNazwaPrzepisu().equals(nazwa)){
+            return przepis;
+            }
+        }
+return null;
+    }
+
 }
