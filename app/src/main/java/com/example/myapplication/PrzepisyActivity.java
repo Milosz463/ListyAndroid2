@@ -2,7 +2,9 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -39,5 +41,19 @@ private Button button;
         textViewOpis.setText(przepis.getSkladniki());
         imageView.setImageResource(przepis.getIdObrazka());
         ratingBar.setRating(przepis.getPolubienia());
+
+        button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent=new Intent();
+                        intent.setAction(Intent.ACTION_SEND);
+                        intent.putExtra(Intent.EXTRA_TEXT, przepis.getNazwaPrzepisu()+" "+przepis.getSkladniki());
+                        intent.setType("text/plain");
+                        Intent podzielSieIntent=Intent.createChooser(intent, null);
+                        startActivity(podzielSieIntent);
+                    }
+                }
+        );
     }
 }
