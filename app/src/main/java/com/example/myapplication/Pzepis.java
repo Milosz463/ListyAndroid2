@@ -1,10 +1,14 @@
 package com.example.myapplication;
+
+import java.util.ArrayList;
+
 public class Pzepis{
     private String nazwaPrzepisu;
     private String skladniki;
     private String kategoria;
     private int idObrazka;
-    private int polubienia;
+    private float polubienia;
+    private ArrayList<Float>wszystkieOceny=new ArrayList<>();
 
     public Pzepis(String nazwaPrzepisu, String skladniki, String kategoria, int idObrazka, int polubienia) {
         this.nazwaPrzepisu = nazwaPrzepisu;
@@ -12,6 +16,7 @@ public class Pzepis{
         this.kategoria = kategoria;
         this.idObrazka = idObrazka;
         this.polubienia = polubienia;
+        wszystkieOceny.add(this.polubienia);
     }
 
     public String getNazwaPrzepisu() {
@@ -30,12 +35,17 @@ public class Pzepis{
         return idObrazka;
     }
 
-    public int getPolubienia() {
-        return polubienia;
+    public float getPolubienia() {
+        float srednia=0;
+        for (int i = 0; i < wszystkieOceny.size(); i++) {
+            srednia=wszystkieOceny.get(i);
+        }
+        srednia=srednia/wszystkieOceny.size();
+        return srednia;
     }
 
-    public void setPolubienia() {
-        this.polubienia ++;
+    public void setPolubienia(int polubienia) {
+        wszystkieOceny.add((float)polubienia);
     }
 
     @Override

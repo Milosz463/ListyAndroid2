@@ -11,13 +11,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 public class PrzepisyActivity extends AppCompatActivity {
 private TextView textViewNazwaPrzepisu;
 private TextView textViewOpis;
 private ImageView imageView;
-private RatingBar ratingBar;
+private RatingBar ratingBarWyswietlany;
+private RatingBar ratingBarZmieniany;
 private Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +32,15 @@ private Button button;
         textViewNazwaPrzepisu=findViewById(R.id.textView3);
         textViewOpis=findViewById(R.id.textView4);
         imageView=findViewById(R.id.imageView);
-        ratingBar=findViewById(R.id.ratingBar);
+        ratingBarWyswietlany =findViewById(R.id.ratingBar);
+        ratingBarZmieniany=findViewById(R.id.ratingBarZmienianny);
         button=findViewById(R.id.button);
 
         Pzepis przepis=Repozytorium.zwrocPrzepis(nazwaPrzepisu);
         textViewNazwaPrzepisu.setText(przepis.getNazwaPrzepisu());
         textViewOpis.setText(przepis.getSkladniki());
         imageView.setImageResource(przepis.getIdObrazka());
-        ratingBar.setRating(przepis.getPolubienia());
+        ratingBarWyswietlany.setRating(przepis.getPolubienia());
 
         button.setOnClickListener(
                 new View.OnClickListener() {
@@ -52,6 +52,15 @@ private Button button;
                         intent.setType("text/plain");
                         Intent podzielSieIntent=Intent.createChooser(intent, null);
                         startActivity(podzielSieIntent);
+                    }
+                }
+        );
+        ratingBarZmieniany.setOnRatingBarChangeListener(
+                new RatingBar.OnRatingBarChangeListener() {
+                    @Override
+                    public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                        przepis.setPolubienia((int)v);
+                        ratingBar.setRating(przepis.getPolubienia());
                     }
                 }
         );
